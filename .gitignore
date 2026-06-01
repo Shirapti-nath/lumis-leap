@@ -1,0 +1,10 @@
+# Godot 4 cache
+.godot/
+.import/
+
+# Local exports (the playable build is deployed to GitHub Pages instead)
+build/
+publish/
+
+# macOS
+.DS_Store

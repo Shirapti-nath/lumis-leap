@@ -1,0 +1,337 @@
+[gd_scene load_steps=28 format=3]
+
+[ext_resource type="PackedScene" path="res://characters/Player.tscn" id="1_player"]
+[ext_resource type="Texture2D" path="res://assets/platform.png" id="2_platform"]
+[ext_resource type="Texture2D" path="res://assets/ground_tile.png" id="3_ground"]
+[ext_resource type="Texture2D" path="res://assets/sky_background.png" id="4_sky"]
+[ext_resource type="PackedScene" path="res://items/Coin.tscn" id="5_coin"]
+[ext_resource type="Script" path="res://levels/Level.gd" id="6_level"]
+[ext_resource type="PackedScene" path="res://ui/HUD.tscn" id="7_hud"]
+[ext_resource type="PackedScene" path="res://enemies/Bird.tscn" id="8_bird"]
+[ext_resource type="PackedScene" path="res://enemies/Walker.tscn" id="9_walker"]
+[ext_resource type="PackedScene" path="res://obstacles/Spike.tscn" id="10_spike"]
+[ext_resource type="PackedScene" path="res://items/Checkpoint.tscn" id="11_cp"]
+[ext_resource type="PackedScene" path="res://items/Star.tscn" id="12_star"]
+[ext_resource type="PackedScene" path="res://levels/Goal.tscn" id="13_goal"]
+[ext_resource type="PackedScene" path="res://items/PowerUp.tscn" id="14_pu"]
+[ext_resource type="Texture2D" path="res://assets/bg_mountains.png" id="15_mtn"]
+[ext_resource type="Texture2D" path="res://assets/bg_hills.png" id="16_hill"]
+[ext_resource type="Texture2D" path="res://assets/bg_clouds.png" id="17_cloud"]
+[ext_resource type="Script" path="res://effects/DayNight.gd" id="18_daynight"]
+[ext_resource type="PackedScene" path="res://ui/TouchControls.tscn" id="19_touch"]
+[ext_resource type="PackedScene" path="res://effects/WeatherFX.tscn" id="20_weather"]
+[ext_resource type="PackedScene" path="res://ui/PauseMenu.tscn" id="21_pause"]
+
+[sub_resource type="RectangleShape2D" id="Shape_g1"]
+size = Vector2(1200, 160)
+
+[sub_resource type="RectangleShape2D" id="Shape_g2"]
+size = Vector2(1040, 160)
+
+[sub_resource type="RectangleShape2D" id="Shape_g3"]
+size = Vector2(1240, 160)
+
+[sub_resource type="RectangleShape2D" id="Shape_g4"]
+size = Vector2(2020, 160)
+
+[sub_resource type="RectangleShape2D" id="Shape_plat"]
+size = Vector2(96, 24)
+
+[node name="Level_01" type="Node2D"]
+script = ExtResource("6_level")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="Sky" type="Sprite2D" parent="Background"]
+position = Vector2(320, 180)
+scale = Vector2(2, 2)
+texture = ExtResource("4_sky")
+
+[node name="Parallax" type="ParallaxBackground" parent="."]
+layer = -1
+
+[node name="Mountains" type="ParallaxLayer" parent="Parallax"]
+motion_scale = Vector2(0.2, 1)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Mountains"]
+centered = false
+position = Vector2(0, 150)
+texture = ExtResource("15_mtn")
+
+[node name="Hills" type="ParallaxLayer" parent="Parallax"]
+motion_scale = Vector2(0.45, 1)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Hills"]
+centered = false
+position = Vector2(0, 200)
+texture = ExtResource("16_hill")
+
+[node name="Clouds" type="ParallaxLayer" parent="Parallax"]
+motion_scale = Vector2(0.3, 1)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax/Clouds"]
+centered = false
+position = Vector2(0, 24)
+texture = ExtResource("17_cloud")
+
+[node name="DayNight" type="CanvasModulate" parent="."]
+script = ExtResource("18_daynight")
+
+[node name="Ground1" type="StaticBody2D" parent="."]
+position = Vector2(600, 380)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground1"]
+scale = Vector2(37.5, 5)
+texture = ExtResource("3_ground")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground1"]
+shape = SubResource("Shape_g1")
+
+[node name="Ground2" type="StaticBody2D" parent="."]
+position = Vector2(1880, 380)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground2"]
+scale = Vector2(32.5, 5)
+texture = ExtResource("3_ground")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground2"]
+shape = SubResource("Shape_g2")
+
+[node name="Ground3" type="StaticBody2D" parent="."]
+position = Vector2(3180, 380)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground3"]
+scale = Vector2(38.75, 5)
+texture = ExtResource("3_ground")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground3"]
+shape = SubResource("Shape_g3")
+
+[node name="Ground4" type="StaticBody2D" parent="."]
+position = Vector2(4990, 380)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground4"]
+scale = Vector2(63.125, 5)
+texture = ExtResource("3_ground")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground4"]
+shape = SubResource("Shape_g4")
+
+[node name="Platform1" type="StaticBody2D" parent="."]
+position = Vector2(820, 220)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform1"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1"]
+shape = SubResource("Shape_plat")
+
+[node name="Platform2" type="StaticBody2D" parent="."]
+position = Vector2(1120, 170)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform2"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2"]
+shape = SubResource("Shape_plat")
+
+[node name="Platform3" type="StaticBody2D" parent="."]
+position = Vector2(1280, 220)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform3"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3"]
+shape = SubResource("Shape_plat")
+
+[node name="Platform4" type="StaticBody2D" parent="."]
+position = Vector2(1700, 200)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform4"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform4"]
+shape = SubResource("Shape_plat")
+
+[node name="Platform5" type="StaticBody2D" parent="."]
+position = Vector2(2480, 210)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform5"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform5"]
+shape = SubResource("Shape_plat")
+
+[node name="Platform6" type="StaticBody2D" parent="."]
+position = Vector2(2900, 170)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform6"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform6"]
+shape = SubResource("Shape_plat")
+
+[node name="Platform7" type="StaticBody2D" parent="."]
+position = Vector2(3890, 215)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform7"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform7"]
+shape = SubResource("Shape_plat")
+
+[node name="Platform8" type="StaticBody2D" parent="."]
+position = Vector2(4300, 180)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform8"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform8"]
+shape = SubResource("Shape_plat")
+
+[node name="Platform9" type="StaticBody2D" parent="."]
+position = Vector2(4700, 150)
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform9"]
+texture = ExtResource("2_platform")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform9"]
+shape = SubResource("Shape_plat")
+
+[node name="Coins" type="Node2D" parent="."]
+
+[node name="Coin1" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(300, 250)
+
+[node name="Coin2" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(360, 250)
+
+[node name="Coin3" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(420, 250)
+
+[node name="Coin4" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(820, 180)
+
+[node name="Coin5" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(1120, 130)
+
+[node name="Coin6" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(1240, 170)
+
+[node name="Coin7" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(1300, 170)
+
+[node name="Coin8" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(1700, 160)
+
+[node name="Coin9" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(2480, 170)
+
+[node name="Coin10" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(2900, 130)
+
+[node name="Coin11" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(3300, 250)
+
+[node name="Coin12" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(3360, 250)
+
+[node name="Coin13" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(3890, 175)
+
+[node name="Coin14" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(4300, 140)
+
+[node name="Coin15" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(4700, 110)
+
+[node name="Coin16" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(5200, 250)
+
+[node name="Coin17" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(5260, 250)
+
+[node name="Coin18" parent="Coins" instance=ExtResource("5_coin")]
+position = Vector2(5320, 250)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Walker1" parent="Enemies" instance=ExtResource("9_walker")]
+position = Vector2(500, 288)
+
+[node name="Walker2" parent="Enemies" instance=ExtResource("9_walker")]
+position = Vector2(1900, 288)
+range_x = 180.0
+
+[node name="Walker3" parent="Enemies" instance=ExtResource("9_walker")]
+position = Vector2(2800, 288)
+
+[node name="Walker4" parent="Enemies" instance=ExtResource("9_walker")]
+position = Vector2(5200, 288)
+range_x = 220.0
+
+[node name="Bird1" parent="Enemies" instance=ExtResource("8_bird")]
+position = Vector2(1300, 150)
+
+[node name="Bird2" parent="Enemies" instance=ExtResource("8_bird")]
+position = Vector2(3180, 140)
+range_x = 220.0
+
+[node name="Bird3" parent="Enemies" instance=ExtResource("8_bird")]
+position = Vector2(3890, 140)
+
+[node name="Spikes" type="Node2D" parent="."]
+
+[node name="Spike1" parent="Spikes" instance=ExtResource("10_spike")]
+position = Vector2(760, 294)
+
+[node name="Spike2" parent="Spikes" instance=ExtResource("10_spike")]
+position = Vector2(2050, 294)
+
+[node name="Spike3" parent="Spikes" instance=ExtResource("10_spike")]
+position = Vector2(4520, 294)
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="Checkpoint1" parent="Checkpoints" instance=ExtResource("11_cp")]
+position = Vector2(2580, 278)
+
+[node name="Checkpoint2" parent="Checkpoints" instance=ExtResource("11_cp")]
+position = Vector2(4000, 278)
+
+[node name="Stars" type="Node2D" parent="."]
+
+[node name="Star1" parent="Stars" instance=ExtResource("12_star")]
+position = Vector2(1120, 110)
+
+[node name="Star2" parent="Stars" instance=ExtResource("12_star")]
+position = Vector2(2900, 110)
+
+[node name="Star3" parent="Stars" instance=ExtResource("12_star")]
+position = Vector2(4700, 80)
+
+[node name="PowerUps" type="Node2D" parent="."]
+
+[node name="PowerUp1" parent="PowerUps" instance=ExtResource("14_pu")]
+position = Vector2(1880, 250)
+
+[node name="PowerUp2" parent="PowerUps" instance=ExtResource("14_pu")]
+position = Vector2(4990, 250)
+
+[node name="Goal" parent="." instance=ExtResource("13_goal")]
+position = Vector2(5850, 278)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(100, 200)
+
+[node name="HUD" parent="." instance=ExtResource("7_hud")]
+
+[node name="TouchControls" parent="." instance=ExtResource("19_touch")]
+
+[node name="WeatherFX" parent="." instance=ExtResource("20_weather")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("21_pause")]

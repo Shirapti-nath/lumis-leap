@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/TouchControls.gd" id="1_tc"]
+[ext_resource type="Texture2D" path="res://assets/touch_button.png" id="2_tex"]
+
+[node name="TouchControls" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_tc")
+
+[node name="Left" type="TouchScreenButton" parent="."]
+position = Vector2(24, 250)
+texture_normal = ExtResource("2_tex")
+action = "move_left"
+
+[node name="Right" type="TouchScreenButton" parent="."]
+position = Vector2(134, 250)
+texture_normal = ExtResource("2_tex")
+action = "move_right"
+
+[node name="Dash" type="TouchScreenButton" parent="."]
+position = Vector2(410, 256)
+texture_normal = ExtResource("2_tex")
+action = "dash"
+
+[node name="Jump" type="TouchScreenButton" parent="."]
+position = Vector2(516, 250)
+texture_normal = ExtResource("2_tex")
+action = "jump"

@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/MainMenu.gd" id="1_menu"]
+[ext_resource type="Theme" path="res://ui/Theme.tres" id="2_theme"]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("2_theme")
+script = ExtResource("1_menu")
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.42, 0.71, 0.92, 1)
+
+[node name="Title" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.16
+anchor_right = 0.5
+offset_left = -260.0
+offset_right = 260.0
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.95, 0.6, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 56
+text = "LUMI'S LEAP"
+
+[node name="Subtitle" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.30
+anchor_right = 0.5
+offset_left = -260.0
+offset_right = 260.0
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 18
+text = "A bright little platforming adventure"
+
+[node name="Center" type="CenterContainer" parent="."]
+anchor_top = 0.42
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBox" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Play" type="Button" parent="Center/VBox"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+text = "Play"
+
+[node name="Settings" type="Button" parent="Center/VBox"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" type="Button" parent="Center/VBox"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+text = "Quit"
+
+[node name="Best" type="Label" parent="Center/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+text = "Best  0      Stars  0"

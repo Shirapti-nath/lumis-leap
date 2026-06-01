@@ -1,0 +1,18 @@
+[gd_resource type="Theme" format=3]
+
+; Shared UI theme. Uses Godot's built-in font (crisp now that the project uses
+; the "canvas_items" stretch mode, which renders text at native window resolution
+; instead of upscaling a tiny 640x360 buffer). Labels get a dark outline for
+; readability over the bright sky.
+
+[resource]
+default_font_size = 16
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 4
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/colors/font_color_hover = Color(1, 0.9, 0.4, 1)
+Button/colors/font_color_pressed = Color(1, 0.8, 0.2, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 4
+Button/font_sizes/font_size = 20

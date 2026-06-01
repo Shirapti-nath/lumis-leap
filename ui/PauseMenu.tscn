@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/PauseMenu.gd" id="1_pause"]
+[ext_resource type="Theme" path="res://ui/Theme.tres" id="2_theme"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+layer = 20
+script = ExtResource("1_pause")
+
+[node name="Root" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("2_theme")
+
+[node name="Dim" type="ColorRect" parent="Root"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.6)
+
+[node name="Center" type="CenterContainer" parent="Root"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="PanelContainer" parent="Root/Center"]
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="Root/Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="Root/Center/Panel/VBox"]
+layout_mode = 2
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+text = "PAUSED"
+
+[node name="Resume" type="Button" parent="Root/Center/Panel/VBox"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Resume"
+
+[node name="Settings" type="Button" parent="Root/Center/Panel/VBox"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Settings"
+
+[node name="Menu" type="Button" parent="Root/Center/Panel/VBox"]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+text = "Main Menu"

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://levels/Goal.gd" id="1_goal"]
+[ext_resource type="Texture2D" path="res://assets/flag.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="Shape_goal"]
+size = Vector2(28, 44)
+
+[node name="Goal" type="Area2D"]
+script = ExtResource("1_goal")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape_goal")
