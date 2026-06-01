@@ -1,22 +1,17 @@
 extends Node
-## Central audio. Creates Music + SFX buses at runtime, synthesises all sounds
-## procedurally (so there is no third-party/copyrighted audio in the project), plays
-## a looping music bed, and exposes play_sfx(). Volumes/mute come from SaveManager;
-## music pitch eases down as the weather worsens.
+## Central audio. Creates SFX buses at runtime and synthesises short sound effects
+## procedurally (no third-party/copyrighted audio). Background music is intentionally
+## off — only gameplay SFX play. Volumes/mute come from SaveManager.
 
 const SFX_VOICES := 6
 const MIX_RATE := 22050
 
-var _music: AudioStreamPlayer
 var _sfx_players: Array[AudioStreamPlayer] = []
 var _sfx: Dictionary = {}
 
 
 func _ready() -> void:
 	_ensure_buses()
-	_music = AudioStreamPlayer.new()
-	_music.bus = "Music"
-	add_child(_music)
 	for i in SFX_VOICES:
 		var p := AudioStreamPlayer.new()
 		p.bus = "SFX"
@@ -26,10 +21,6 @@ func _ready() -> void:
 	_build_sfx()
 	_apply_settings()
 	SaveManager.settings_changed.connect(_apply_settings)
-	WeatherManager.weather_changed.connect(_on_weather)
-
-	_music.stream = _build_music()
-	_music.play()
 
 
 func play_sfx(sound_name: String) -> void:
@@ -60,11 +51,6 @@ func _apply_settings() -> void:
 	AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), muted)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(maxf(music_v, 0.0001)))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(maxf(sfx_v, 0.0001)))
-
-
-func _on_weather(intensity: float) -> void:
-	if _music:
-		_music.pitch_scale = lerpf(1.0, 0.9, clampf(intensity, 0.0, 1.0))
 
 
 func _free_voice() -> AudioStreamPlayer:
@@ -109,25 +95,6 @@ func _tone(freq: float, dur: float, vol: float, wave: String, sweep: float) -> A
 		var val := int(clampf(s * env * vol, -1.0, 1.0) * 32767.0)
 		bytes.encode_s16(i * 2, val)
 	return _wav(bytes, false, 0)
-
-
-func _build_music() -> AudioStreamWAV:
-	var notes := [392.0, 440.0, 494.0, 587.0, 523.0, 440.0, 392.0, 330.0]
-	var note_dur := 0.32
-	var per := int(MIX_RATE * note_dur)
-	var total := per * notes.size()
-	var bytes := PackedByteArray()
-	bytes.resize(total * 2)
-	var idx := 0
-	for ni in notes.size():
-		var f: float = notes[ni]
-		for i in per:
-			var t := float(i) / MIX_RATE
-			var s := sin(TAU * f * t) * 0.3 + sin(TAU * f * 2.0 * t) * 0.1
-			var env := minf(1.0, t / 0.02) * exp(-1.4 * t / note_dur)
-			bytes.encode_s16(idx * 2, int(clampf(s * env, -1.0, 1.0) * 32767.0))
-			idx += 1
-	return _wav(bytes, true, total)
 
 
 func _wav(bytes: PackedByteArray, looping: bool, loop_end: int) -> AudioStreamWAV:
